@@ -11,8 +11,10 @@
       crossorigin="anonymous"
     />
   </head>
+  
   <body>
-    <div style="display: flex; flex-direction: column; gap: 30px">
+  
+    <div class="container" style="display: flex; flex-direction: column; gap: 30px">
       <div class="form-group">
         <label for="nazwa">Nazwa Produktu</label>
         <input
@@ -44,6 +46,9 @@
         />
       </div>
       <button class="btn btn-primary" id="btn">Submit</button>
+    </div>
+    <div class="container" id="wyswietlanie" style="display: flex; flex-direction: column; gap: 5px">
+
     </div>
   </body>
   <script type="module">
@@ -98,11 +103,31 @@
       const rodzaj = document.getElementById("rodzaj").value;
       const nazwa = document.getElementById("nazwa").value;
       // console.log({ilosc, rodzaj, nazwa})
-      return await addProduct({ilosc, rodzaj, nazwa})
+      await addProduct({ilosc, rodzaj, nazwa})
+      location.reload();
     };
 
     // console.log(await addProduct({rodzaj:'kkkkk',nazwa:'ddddddddd',ilosc:2}))
     console.log(await getCities(db));
+    (async () => {
+      const xd = await getCities(db)
+      Object.entries(xd).forEach(([key, value]) =>{ 
+      const dd = document.getElementById("wyswietlanie");
+      let pnazwa = document.createElement("p");
+      pnazwa.innerText =`Nazwa: ${value.nazwa}`
+
+      let prodzaj= document.createElement("p");
+      prodzaj.innerText =`rodzaj: ${value.rodzaj}`
+
+      let pilosc= document.createElement("p");
+      pilosc.innerText =`ilosc: ${value.ilosc}`
+
+      pnazwa.setAttribute('class','h1')
+      document.getElementById('wyswietlanie').appendChild(pnazwa)
+      document.getElementById('wyswietlanie').appendChild(prodzaj)
+      document.getElementById('wyswietlanie').appendChild(pilosc)
+    });
+    })();
 
     const submitBtn = document.getElementById("btn");
     btn.addEventListener(
